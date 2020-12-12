@@ -283,7 +283,8 @@ public class EasyEditManager {
                                         }
                                     } catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException
                                             | IllegalAccessException | IllegalArgumentException | InvocationTargetException exception) {
-                                        Log.e(DEBUG_TAG, "Restarting " + restartActionModeCallbackName + " received " + exception.getClass().getCanonicalName() + " "+ exception.getMessage());
+                                        Log.e(DEBUG_TAG, "Restarting " + restartActionModeCallbackName + " received " + exception.getClass().getCanonicalName()
+                                                + " " + exception.getMessage());
                                     }
                                 }
                                 Log.e(DEBUG_TAG, "restart, saved state is null");
@@ -530,6 +531,20 @@ public class EasyEditManager {
                 contextMenuEnabled = false;
             }
         }
+    }
+
+    /**
+     * Check if the current mode only supports OSM elements for selection
+     * 
+     * @return true if the current mode only supports OSM elements for selection
+     */
+    public boolean elementsOnly() {
+        synchronized (actionModeCallbackLock) {
+            if (currentActionModeCallback != null) {
+                return currentActionModeCallback.elementsOnly();
+            }
+        }
+        return false;
     }
 
     /**
